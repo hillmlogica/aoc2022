@@ -14,5 +14,21 @@ fun answer2(puzzleInput: String): String {
 }
 
 fun answer(puzzleInput: String): String {
+    val lines = puzzleInput.lines()
+    val separator = lines.indexOfFirst { it.isBlank() }
+    val split = lines[separator - 1].split(" +".toRegex()).filter { it.isNotBlank() }
+    val howManyStacks = split.size
+    val stacks : MutableList<MutableList<Char>> = MutableList(howManyStacks) { mutableListOf() }
+    (0 .. separator-2).reversed().forEach{lineIndex ->
+        (0 until howManyStacks).forEach {
+            val crate = lines[lineIndex][(it * 4) + 1]
+            if (crate != ' ') {
+                stacks[it] += crate
+            }
+        }
+    }
+    println(Stacks(stacks))
     return ""
 }
+
+data class Stacks(val stacks: List<List<Char>>)
