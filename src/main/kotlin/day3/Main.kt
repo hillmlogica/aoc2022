@@ -10,7 +10,11 @@ fun main() {
 }
 
 fun answer2(puzzleInput: String): Int {
-    return 0
+    return puzzleInput.lines().chunked(3).map {
+        rucksacks -> rucksacks[0].first { rucksacks[1].contains(it) && rucksacks[2].contains(it) }
+    }.map {
+        priorityFor(it)
+    }.sum()
 }
 
 fun answer(puzzleInput: String): Int {
@@ -20,9 +24,13 @@ fun answer(puzzleInput: String): Int {
         val right = it.substring(halfLength)
         commonItemType(left, right)
     }.map {
-        if (it.isUpperCase()) 27 + it.code - 'A'.code
-        else 1 + it.code - 'a'.code
+        priorityFor(it)
     }.sum()
+}
+
+private fun priorityFor(it: Char): Int {
+    return if (it.isUpperCase()) 27 + it.code - 'A'.code
+    else 1 + it.code - 'a'.code
 }
 
 fun commonItemType(left: String, right: String): Char {
