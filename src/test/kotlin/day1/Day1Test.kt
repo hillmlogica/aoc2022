@@ -1,3 +1,5 @@
+package day1
+
 import day1.answer
 import day1.answer2
 import org.assertj.core.api.Assertions
