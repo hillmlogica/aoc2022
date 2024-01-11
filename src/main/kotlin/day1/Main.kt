@@ -7,3 +7,7 @@ fun main() {
     println(puzzleInput)
 
 }
+
+fun answer(puzzleInput: String): Int {
+    return 0
+}

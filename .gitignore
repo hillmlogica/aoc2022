@@ -50,3 +50,5 @@ local.properties
 *.wim
 *.xz
 *.zip
+# Ignore Gradle build output directory
+build
