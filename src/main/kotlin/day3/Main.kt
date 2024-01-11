@@ -14,5 +14,17 @@ fun answer2(puzzleInput: String): Int {
 }
 
 fun answer(puzzleInput: String): Int {
-    return 0
+    return puzzleInput.lines().map {
+        val halfLength = it.length / 2
+        val left = it.substring(0, halfLength)
+        val right = it.substring(halfLength)
+        commonItemType(left, right)
+    }.map {
+        if (it.isUpperCase()) 27 + it.code - 'A'.code
+        else 1 + it.code - 'a'.code
+    }.sum()
+}
+
+fun commonItemType(left: String, right: String): Char {
+    return left.first() { right.contains(it) }
 }
