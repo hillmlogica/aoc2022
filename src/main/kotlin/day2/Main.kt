@@ -13,13 +13,13 @@ fun answer2(puzzleInput: String): Int {
     return puzzleInput.lines().map {
         val left = parseLeft(it[0])
         Game(left, parseRight(it[2], left))
-    }.map { it.score() }.sum()
+    }.sumOf { it.score() }
 }
 
 fun answer(puzzleInput: String): Int {
     return puzzleInput.lines().map {
         Game(parseLeft(it[0]), parseRight(it[2]))
-    }.map { it.score() }.sum()
+    }.sumOf { it.score() }
 }
 
 fun parseLeft(left: Char): Choice {
@@ -42,7 +42,7 @@ fun parseRight(right: Char, other: Choice): Choice {
     return when(right) {
         'X' -> other.winsAgainst()
         'Y' -> other
-        'Z' -> Choice.entries.first() { it.winsAgainst() == other }
+        'Z' -> Choice.entries.first { it.winsAgainst() == other }
         else -> { throw RuntimeException("Don't understand $right")}
     }
 }
