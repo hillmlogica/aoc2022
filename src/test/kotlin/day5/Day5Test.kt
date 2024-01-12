@@ -20,6 +20,13 @@ move 1 from 1 to 2"""
     }
 
     @Test
+    fun `parse move`() {
+        Assertions.assertThat(parseMove("move 1 from 2 to 1")).isEqualTo(Move(1, 2, 1))
+    }
+
+
+
+    @Test
     fun `check part 2 example`() {
         Assertions.assertThat(answer2(exampleInput)).isEqualTo("")
     }
