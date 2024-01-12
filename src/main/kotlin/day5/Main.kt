@@ -13,8 +13,11 @@ fun answer2(puzzleInput: String): String {
     val lines = puzzleInput.lines()
     val separator = lines.indexOfFirst { it.isBlank() }
     val ss = parseStacks(lines, separator)
-    val finalStacks = lines.subList(separator + 1, lines.size).map { parseMove(it) }.fold(ss) { ss, move -> ss.apply(move) }
-    return String(finalStacks.stacks.map { it.last() }.toCharArray())
+    val finalStacks = lines.subList(separator + 1, lines.size).map { parseMove(it) }.fold(ss) { ss, move ->
+        val newSs = ss.applyPart2(move)
+        newSs
+    }
+    return String(finalStacks.stacks.map { it.first() }.toCharArray())
 }
 
 fun answer(puzzleInput: String): String {
@@ -54,16 +57,16 @@ data class Stacks(val stacks: List<List<Char>>) {
         }
         return newStacks
     }
-//    fun applyPart2(move: Move): Stacks {
-//        val fromIndex = move.from - 1
-//        val toIndex = move.to - 1
-//        val newTo = stacks[toIndex] + stacks[fromIndex].subList()
-//        val newFrom = stacks[from].dropLast(1)
-//        val newStacks = stacks.toMutableList()
-//        newStacks[from] = newFrom
-//        newStacks[to] = newTo
-//        return Stacks(newStacks)
-//    }
+    fun applyPart2(move: Move): Stacks {
+        val from = move.from - 1
+        val to = move.to - 1
+        val newTo = stacks[from].take(move.quantity) + stacks[to]
+        val newFrom = stacks[from].drop(move.quantity)
+        val newStacks = stacks.toMutableList()
+        newStacks[from] = newFrom
+        newStacks[to] = newTo
+        return Stacks(newStacks)
+    }
 
     fun move(from: Int, to: Int) : Stacks {
         val newTo = listOf(stacks[from].first()) + stacks[to]
