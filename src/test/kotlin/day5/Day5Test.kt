@@ -28,6 +28,6 @@ move 1 from 1 to 2"""
 
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo("")
+        Assertions.assertThat(answer2(exampleInput)).isEqualTo("MCD")
     }
 }

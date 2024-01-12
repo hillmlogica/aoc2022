@@ -10,7 +10,7 @@ fun main() {
 }
 
 fun answer2(puzzleInput: String): String {
-    return ""
+    return "boo"
 }
 
 fun answer(puzzleInput: String): String {
