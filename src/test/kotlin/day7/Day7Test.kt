@@ -34,16 +34,16 @@ ${'$'} ls
     }
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo(0)
+        Assertions.assertThat(answer2(exampleInput)).isEqualTo(24933642)
     }
 
     @Test
     fun `check example tree`() {
-        val tree = Directory("/",
-            listOf(
-                Directory("a",
-                    listOf(
-                        Directory("e", listOf(
+        val tree = Directory(name = "/",
+            children = mutableListOf(
+                Directory(name = "a",
+                    children = mutableListOf(
+                        Directory(name = "e", children = mutableListOf(
                             File("i", 584)
                         )),
                         File("f", 29116),
@@ -53,7 +53,7 @@ ${'$'} ls
                 ),
                 File("b.txt", 14848514),
                 File("c.dat", 8504156),
-                Directory("d", listOf(
+                Directory(name = "d", children = mutableListOf(
                     File("j", 4060174),
                     File("d.log", 8033020),
                     File("d.ext", 5626152),
