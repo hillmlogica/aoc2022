@@ -16,8 +16,8 @@ fun answer2(puzzleInput: String): Int {
     val transposedGrid = grid.transpose()
     val viewsUp = viewingDistanceHorizontal(0 until transposedGrid.height(), 0 until transposedGrid.width(), transposedGrid).transpose()
     val viewsDown = viewingDistanceHorizontal(0 until transposedGrid.height(), (0 until transposedGrid.width()).reversed(), transposedGrid).flipHorizontal().transpose()
-    viewsLeft.multiplyWith(viewsRight)
-    return 0
+    val scenicScores = viewsLeft.multiplyWith(viewsRight).multiplyWith(viewsUp).multiplyWith(viewsDown)
+    return scenicScores.max()
 }
 
 fun answer(puzzleInput: String): Int {
@@ -130,5 +130,13 @@ data class Grid(val lines: List<List<Int>>) {
                 (treeAt(Coord(x,y)) * other.treeAt(Coord(x,y)))
             }
         })
+    }
+
+    fun max(): Int {
+        return (0 until height()).flatMap { y ->
+            (0 until width()).map { x ->
+                treeAt(Coord(x, y))
+            }
+        }.max()
     }
 }
