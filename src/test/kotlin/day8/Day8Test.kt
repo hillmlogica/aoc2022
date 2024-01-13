@@ -16,7 +16,7 @@ class Day8Test {
     }
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo(0)
+        Assertions.assertThat(answer2(exampleInput)).isEqualTo(8)
     }
 
 }

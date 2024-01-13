@@ -10,6 +10,8 @@ fun main() {
 }
 
 fun answer2(puzzleInput: String): Int {
+    val grid = Grid(puzzleInput.lines())
+    val viewsLeft = viewingDistanceHorizontal(0 until grid.height(), 0 until grid.width(), grid)
     return 0
 }
 
@@ -21,6 +23,40 @@ fun answer(puzzleInput: String): Int {
     visibles.addAll(lookForVisiblesInVerticals(0 until grid.width(), 0 until grid.height(), grid))
     visibles.addAll(lookForVisiblesInVerticals(0 until grid.width(), (0 until grid.height()).reversed(), grid))
     return visibles.size
+}
+
+private fun viewingDistanceHorizontal(
+    yRange: IntProgression,
+    xRange: IntProgression,
+    grid: Grid
+): Grid {
+    val lines = yRange.map { y ->
+        val prevCoords =
+            xRange.fold(listOf(listOf())) { acc: List<List<Coord>>, x: Int -> acc + listOf(acc.last() + Coord(x, y)) }
+                .dropLast(1)
+        val coordsAndTheirPreviouses = xRange.map { x ->
+            Coord(x, y)
+        }.zip(prevCoords)
+        val distances = coordsAndTheirPreviouses.map {
+            val treeHeight = grid.treeAt(it.first)
+            val otherTreeHeights = it.second.reversed().map { grid.treeAt(it) }
+            var blocked = false
+            var viewingDistance = 0
+            otherTreeHeights.forEach {
+                if (!blocked) {
+                    viewingDistance += 1
+                    if (it >= treeHeight) {
+                        blocked = true
+                    }
+                }
+            }
+            viewingDistance
+        }
+        val line = String(distances.map { it.digitToChar() }.toCharArray())
+        println(line)
+        line
+    }
+    return Grid(lines)
 }
 
 private fun lookForVisiblesInHorizontals(
@@ -41,6 +77,7 @@ private fun lookForVisiblesInHorizontals(
     }
     return visibles
 }
+
 private fun lookForVisiblesInVerticals(
     xRange: IntProgression,
     yRange: IntProgression,
@@ -61,12 +98,12 @@ private fun lookForVisiblesInVerticals(
 }
 
 data class Coord(val x: Int, val y: Int) {
-    fun neighbours() = listOf(copy(x=x+1), copy(x=x-1), copy(y=y+1), copy(y=y-1))
+    fun neighbours() = listOf(copy(x = x + 1), copy(x = x - 1), copy(y = y + 1), copy(y = y - 1))
 }
 
 data class Grid(val lines: List<String>) {
     fun width() = lines.first().length
     fun height() = lines.size
     fun contains(it: Coord): Boolean = it.x >= 0 && it.x < width() && it.y >= 0 && it.y < height()
-    fun treeAt(coord: Coord) : Int = lines[coord.y][coord.x].digitToInt()
+    fun treeAt(coord: Coord): Int = lines[coord.y][coord.x].digitToInt()
 }
