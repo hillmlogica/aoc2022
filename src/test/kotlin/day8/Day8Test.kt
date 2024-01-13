@@ -19,4 +19,17 @@ class Day8Test {
         Assertions.assertThat(answer2(exampleInput)).isEqualTo(8)
     }
 
+    @Test
+    fun `can tranpose`() {
+        val grid = makeGrid(exampleInput).transpose()
+        val expected = makeGrid(
+            """32633
+05535
+35353
+71349
+32290"""
+        )
+        Assertions.assertThat(grid).isEqualTo(expected)
+    }
+
 }
