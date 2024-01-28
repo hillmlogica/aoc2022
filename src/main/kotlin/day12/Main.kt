@@ -1,9 +1,6 @@
 package day12
 
 import java.io.File
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
 
 fun main() {
     val puzzleInput = File("day12/puzzleInput.txt").readText()
@@ -12,21 +9,28 @@ fun main() {
 
 }
 
-fun answer2(puzzleInput: String): Long {
-    return 0
+fun answer2(puzzleInput: String): Int {
+    val g = Grid(puzzleInput.lines())
+    return dijkstraShortestPathToEndFrom(g, g.findCells('a') + g.start())
 }
 
 fun answer(puzzleInput: String): Int {
     val g = Grid(puzzleInput.lines())
+    return dijkstraShortestPathToEndFrom(g, listOf(g.start()))
+}
+
+private fun dijkstraShortestPathToEndFrom(g: Grid, starts: List<Coord>): Int {
     val shortestPaths = mutableMapOf<Coord, Int>()
-    val q = mutableListOf(g.start())
+    val q = mutableListOf<Coord>()
     (0 until g.height()).map { y ->
         (0 until g.width()).map { x ->
-            shortestPaths[Coord(x,y)] = Int.MAX_VALUE
-            q.add(Coord(x,y))
+            shortestPaths[Coord(x, y)] = Int.MAX_VALUE
+            q.add(Coord(x, y))
         }
     }
-    shortestPaths[g.start()] = 0
+    starts.forEach {
+        shortestPaths[it] = 0
+    }
     while (q.isNotEmpty()) {
         val e = q.minBy { shortestPaths[it]!! }
         q.remove(e)
@@ -52,12 +56,15 @@ data class Grid(val lines: List<String>) {
     fun end() = findCell('E')
 
     fun findCell(c: Char): Coord {
-        (0 until width()).map {x ->
+        return findCells(c).first()
+    }
+
+    fun findCells(c: Char): List<Coord> {
+        return (0 until width()).flatMap {x ->
             (0 until height()).map { y ->
-                if (cellAt(Coord(x, y)) == c) return Coord(x,y)
+                Coord(x, y)
             }
-        }
-        throw RuntimeException("Couldn't find $c")
+        }.filter { cellAt(it) == c }
     }
 
     fun gridContains(c: Coord) = (0 until height()).contains(c.y) && (0 until width()).contains(c.x)
