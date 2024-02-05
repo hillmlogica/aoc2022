@@ -1,7 +1,9 @@
 package day7
 
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import strikt.api.expectThat
+import strikt.assertions.containsExactlyInAnyOrder
+import strikt.assertions.isEqualTo
 
 class Day7Test {
     val exampleInput = """${'$'} cd /
@@ -30,11 +32,11 @@ ${'$'} ls
 
     @Test
     fun `check part 1 example`() {
-        Assertions.assertThat(answer(exampleInput)).isEqualTo(95437)
+        expectThat(answer(exampleInput)).isEqualTo(95437)
     }
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo(24933642)
+        expectThat(answer2(exampleInput)).isEqualTo(24933642)
     }
 
     @Test
@@ -61,7 +63,7 @@ ${'$'} ls
                 )),
             )
         )
-        Assertions.assertThat(tree.dirSizes()).containsExactlyInAnyOrder(
+        expectThat(tree.dirSizes()).containsExactlyInAnyOrder(
             Pair("e", 584),
             Pair("a", 94853),
             Pair("d", 24933642),

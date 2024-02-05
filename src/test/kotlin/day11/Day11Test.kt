@@ -1,6 +1,7 @@
 package day11
+import strikt.api.expectThat
+import strikt.assertions.isEqualTo
 
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class Day11Test {
@@ -34,25 +35,25 @@ Monkey 3:
 
     @Test
     fun `check part 1 example`() {
-        Assertions.assertThat(answer(exampleInput)).isEqualTo(10605)
+        expectThat(answer(exampleInput)).isEqualTo(10605)
     }
 
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo(2713310158L)
+        expectThat(answer2(exampleInput)).isEqualTo(2713310158L)
     }
 
     @Test
     fun `check lcm`() {
-        Assertions.assertThat(lcm(listOf(2,7))).isEqualTo(14)
+        expectThat(lcm(listOf(2,7))).isEqualTo(14)
     }
     @Test
     fun `check lcm same number`() {
-        Assertions.assertThat(lcm(listOf(7,7))).isEqualTo(7)
+        expectThat(lcm(listOf(7,7))).isEqualTo(7)
     }
     @Test
     fun `check lcm multiple numbers`() {
-        Assertions.assertThat(lcm(listOf(2*7,7*3,2*3))).isEqualTo(2*3*7)
+        expectThat(lcm(listOf(2*7,7*3,2*3))).isEqualTo(2*3*7)
     }
 
 

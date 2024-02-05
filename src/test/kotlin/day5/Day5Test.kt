@@ -1,7 +1,8 @@
 package day5
 
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import strikt.api.expectThat
+import strikt.assertions.isEqualTo
 
 class Day5Test {
     val exampleInput = """    [D]    
@@ -16,16 +17,16 @@ move 1 from 1 to 2"""
 
     @Test
     fun `check part 1 example`() {
-        Assertions.assertThat(answer(exampleInput)).isEqualTo("CMZ")
+        expectThat(answer(exampleInput)).isEqualTo("CMZ")
     }
 
     @Test
     fun `parse move`() {
-        Assertions.assertThat(parseMove("move 1 from 2 to 1")).isEqualTo(Move(1, 2, 1))
+        expectThat(parseMove("move 1 from 2 to 1")).isEqualTo(Move(1, 2, 1))
     }
 
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo("MCD")
+        expectThat(answer2(exampleInput)).isEqualTo("MCD")
     }
 }

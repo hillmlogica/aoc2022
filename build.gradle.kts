@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.assertj:assertj-core:3.25.1")
+    testImplementation("io.strikt:strikt-core:0.34.0")
     // Use the Kotlin JUnit 5 integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 

@@ -1,7 +1,8 @@
 package day10
 
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import strikt.api.expectThat
+import strikt.assertions.isEqualTo
 
 class Day10Test {
     val exampleInput = """addx 15
@@ -153,12 +154,12 @@ noop"""
 
     @Test
     fun `check part 1 example`() {
-        Assertions.assertThat(answer(exampleInput)).isEqualTo(13140)
+        expectThat(answer(exampleInput)).isEqualTo(13140)
     }
 
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo("""##..##..##..##..##..##..##..##..##..##..
+        expectThat(answer2(exampleInput)).isEqualTo("""##..##..##..##..##..##..##..##..##..##..
 ###...###...###...###...###...###...###.
 ####....####....####....####....####....
 #####.....#####.....#####.....#####.....

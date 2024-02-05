@@ -2,8 +2,9 @@ package day1
 
 import day1.answer
 import day1.answer2
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import strikt.api.expectThat
+import strikt.assertions.isEqualTo
 
 class Day1Test {
     val exampleInput = """1000
@@ -23,10 +24,10 @@ class Day1Test {
 
     @Test
     fun `check part 1 example`() {
-        Assertions.assertThat(answer(exampleInput)).isEqualTo(24000)
+        expectThat(answer(exampleInput)).isEqualTo(24000)
     }
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo(45000)
+        expectThat(answer2(exampleInput)).isEqualTo(45000)
     }
 }

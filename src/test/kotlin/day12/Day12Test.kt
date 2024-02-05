@@ -1,7 +1,8 @@
 package day12
 
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import strikt.api.expectThat
+import strikt.assertions.isEqualTo
 
 class Day12Test {
     val exampleInput = """Sabqponm
@@ -12,11 +13,11 @@ abdefghi"""
 
     @Test
     fun `check part 1 example`() {
-        Assertions.assertThat(answer(exampleInput)).isEqualTo(31)
+        expectThat(answer(exampleInput)).isEqualTo(31)
     }
 
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo(29)
+        expectThat(answer2(exampleInput)).isEqualTo(29)
     }
 }

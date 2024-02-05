@@ -1,6 +1,7 @@
 package day8
 
-import org.assertj.core.api.Assertions
+import strikt.api.expectThat
+import strikt.assertions.isEqualTo
 import org.junit.jupiter.api.Test
 
 class Day8Test {
@@ -12,11 +13,11 @@ class Day8Test {
 
     @Test
     fun `check part 1 example`() {
-        Assertions.assertThat(answer(exampleInput)).isEqualTo(21)
+        expectThat(answer(exampleInput)).isEqualTo(21)
     }
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo(8)
+        expectThat(answer2(exampleInput)).isEqualTo(8)
     }
 
     @Test
@@ -29,7 +30,7 @@ class Day8Test {
 71349
 32290"""
         )
-        Assertions.assertThat(grid).isEqualTo(expected)
+        expectThat(grid).isEqualTo(expected)
     }
 
 }

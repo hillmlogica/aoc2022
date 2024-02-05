@@ -1,6 +1,7 @@
 package day3
 
-import org.assertj.core.api.Assertions
+import strikt.api.expectThat
+import strikt.assertions.isEqualTo
 import org.junit.jupiter.api.Test
 
 class Day3Test {
@@ -13,11 +14,11 @@ CrZsJsPPZsGzwwsLwLmpwMDw"""
 
     @Test
     fun `check part 1 example`() {
-        Assertions.assertThat(answer(exampleInput)).isEqualTo(157)
+        expectThat(answer(exampleInput)).isEqualTo(157)
     }
 
     @Test
     fun `check part 2 example`() {
-        Assertions.assertThat(answer2(exampleInput)).isEqualTo(70)
+        expectThat(answer2(exampleInput)).isEqualTo(70)
     }
 }
