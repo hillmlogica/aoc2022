@@ -10,14 +10,19 @@ fun main() {
 }
 
 fun answer2(puzzleInput: String): Int {
-    return 0
+    val allLines = puzzleInput.lines().flatMap {
+        parswLines(it)
+    }
+    val floorY = allLines.flatMap { listOf(it.a.y, it.b.y) }.max() + 2
+    val floorLine = Line(Coord(Int.MIN_VALUE, floorY), Coord(Int.MAX_VALUE, floorY))
+    return Puzzle(allLines + floorLine).addSandUntilSandDropsOffOrReachesSource()
 }
 
 fun answer(puzzleInput: String): Int {
     val allLines = puzzleInput.lines().flatMap {
         parswLines(it)
     }
-    return Puzzle(allLines).addSandUntilSandDropsOff()
+    return Puzzle(allLines).addSandUntilSandDropsOffOrReachesSource()
 }
 
 private fun parswLines(it: String) : List<Line> {
@@ -46,19 +51,23 @@ private fun readCoord(it: String, index: Int): Coord {
 
 data class Puzzle(val lines: List<Line>) {
 
-    fun addSandUntilSandDropsOff() : Int {
+    fun addSandUntilSandDropsOffOrReachesSource() : Int {
         val dropOffY = lines.flatMap { listOf(it.a.y, it.b.y) }.max() + 1
-        val sand = mutableListOf<Coord>()
-        var grain = doAGrainOfSand(dropOffY, sand)
-        while (grain != null) {
+        val sand = Sand()
+        val source = Coord(500, 0)
+        var grain = doAGrainOfSand(dropOffY, sand, source)
+        while (grain != null && !sand.contains(source)) {
             sand.add(grain)
-            grain = doAGrainOfSand(dropOffY, sand)
+            grain = doAGrainOfSand(dropOffY, sand, source)
+            if (sand.size() % 1000 == 0) {
+                println("${sand.size()}")
+            }
         }
-        return sand.size
+        return sand.size()
     }
 
-    private fun doAGrainOfSand(dropOffY: Int, sand: MutableList<Coord>): Coord? {
-        var pos = Coord(500, 0)
+    private fun doAGrainOfSand(dropOffY: Int, sand: Sand, source: Coord): Coord? {
+        var pos = source
         while (pos.y < dropOffY) {
             val nextMoves = listOf(pos.down(), pos.downLeft(), pos.downRight())
             val nextMove = nextMoves.firstOrNull{canMoveTo(it, sand)}
@@ -71,7 +80,7 @@ data class Puzzle(val lines: List<Line>) {
         return null
     }
 
-    private fun canMoveTo(coord: Coord, sand: MutableList<Coord>): Boolean {
+    private fun canMoveTo(coord: Coord, sand: Sand): Boolean {
         if (sand.contains(coord)) {
             return false
         }
@@ -80,6 +89,32 @@ data class Puzzle(val lines: List<Line>) {
         }
         return true
     }
+}
+
+class Sand() {
+    var size: Int = 0
+    var sandBorder = mutableListOf<Coord>()
+    fun contains(coord: Coord): Boolean {
+        return sandBorder.contains(coord)
+    }
+
+    fun add(grain: Coord) {
+        sandBorder.add(grain)
+        val possibleMovesForGrain = listOf(grain.down(), grain.downLeft(), grain.downRight())
+        possibleMovesForGrain.forEach {
+            if (sandBorder.contains(it)) {
+                if (sandBorder.contains(it.upLeft()) && sandBorder.contains(it.upRight()) && sandBorder.contains(it.up())) {
+                    sandBorder.remove(it)
+                }
+            }
+        }
+        size++
+    }
+
+    fun size(): Int {
+        return size
+    }
+
 }
 data class Line(val a: Coord, val b: Coord) {
     init {
@@ -107,5 +142,15 @@ data class Coord(val x: Int, val y: Int) {
     }
     fun downRight(): Coord {
         return copy(x+1, y+1)
+    }
+
+    fun upLeft(): Coord {
+        return copy(x-1, y-1)
+    }
+    fun upRight(): Coord {
+        return copy(x+1, y-1)
+    }
+    fun up(): Coord {
+        return copy(x, y-1)
     }
 }
