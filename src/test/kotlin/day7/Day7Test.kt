@@ -2,6 +2,8 @@ package day7
 
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
+import strikt.assertions.contains
+import strikt.assertions.containsExactly
 import strikt.assertions.containsExactlyInAnyOrder
 import strikt.assertions.isEqualTo
 
@@ -64,10 +66,10 @@ ${'$'} ls
             )
         )
         expectThat(tree.dirSizes()).containsExactlyInAnyOrder(
-            Pair("e", 584),
-            Pair("a", 94853),
-            Pair("d", 24933642),
-            Pair("/", 48381165),
+            Pair("e", 584L),
+            Pair("a", 94853L),
+            Pair("d", 24933642L),
+            Pair("/", 48381165L)
         )
     }
 }
