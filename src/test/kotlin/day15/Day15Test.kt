@@ -1,7 +1,6 @@
 package day15
 
 import org.junit.jupiter.api.Test
-import strikt.api.Assertion
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isFalse
@@ -25,7 +24,7 @@ Sensor at x=20, y=1: closest beacon is at x=15, y=3"""
 
     @Test
     fun `check part 1 example`() {
-        expectThat(answer(exampleInput)).isEqualTo(0)
+        expectThat(answer(exampleInput, 10)).isEqualTo(26)
     }
 
     @Test
@@ -74,5 +73,16 @@ Sensor at x=20, y=1: closest beacon is at x=15, y=3"""
         expectThat(shape2.contains(Coord(2, 1))).isFalse()
         expectThat(shape2.contains(Coord(2, 2))).isFalse()
         expectThat(shape2.contains(Coord(200, 200))).isFalse()
+    }
+
+    @Test
+    fun `can parse line`() {
+        expectThat(parse("Sensor at x=2, y=18: closest beacon is at x=-2, y=15")).isEqualTo(Pair(Coord(2, 18), Coord(-2, 15)))
+    }
+    @Test
+    fun `can get manhattan shape touching beacon`() {
+        val shape = shapeIncludingBeacon(Pair(Coord(8, 7), Coord(2, 10)))
+        expectThat(shape.contains(Coord(2,10))).isTrue()
+        expectThat(shape).isEqualTo(ManhattanShape(Coord(8,7), Coord(-1, 7), Coord(8, -2), Coord(17, 7), Coord(8, 16)))
     }
 }
