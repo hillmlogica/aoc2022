@@ -29,7 +29,7 @@ Sensor at x=20, y=1: closest beacon is at x=15, y=3"""
 
     @Test
     fun `check part 2 example`() {
-        expectThat(answer2(exampleInput)).isEqualTo(0)
+        expectThat(answer2(exampleInput, 20)).isEqualTo(56000011)
     }
 
     @Test
